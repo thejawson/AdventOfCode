@@ -46,6 +46,10 @@ class Day10 : IDay
 
     public string Puzzle2()
     {
+        for (int i = 0; i < 255; i++)
+        {
+            Console.WriteLine($"{i}:{(char)i}");
+        }
         var output = new StringBuilder();
         output.AppendLine();
         int offset = 0;
@@ -53,7 +57,7 @@ class Day10 : IDay
         {
             int pixelPosition = pixel - offset;
             if (RegistryHistory[pixel] <= pixelPosition && RegistryHistory[pixel] + 2 >= pixelPosition)
-                output.Append("#");
+                output.Append( (char)166);
             else
                 output.Append(" ");
             if (pixel > 0 && pixel % 40 == 0)
