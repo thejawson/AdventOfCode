@@ -55,7 +55,7 @@ class Day10 : IDay
             if (RegistryHistory[pixel] <= pixelPosition && RegistryHistory[pixel] + 2 >= pixelPosition)
                 output.Append("#");
             else
-                output.Append(".");
+                output.Append(" ");
             if (pixel > 0 && pixel % 40 == 0)
             {
                 output.AppendLine();
