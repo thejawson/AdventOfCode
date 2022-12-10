@@ -7,42 +7,42 @@ class Day10 : IDay
     private IEnumerable<string[]> Commands = Input.Split("\r\n").Select(x => x.Split(' '));
     private int Value = 1;
     private int Cycles = 0;
-    private Dictionary<int, int> CommandHistory = new();
+    private Dictionary<int, int> RegistryHistory = new();
 
     public string Puzzle1()
     {
-        CommandHistory[0] = Value;
+        RegistryHistory[0] = Value;
         foreach (var command in Commands)
         {
             switch (command[0])
             {
                 case "noop":
                     Cycles++;
-                    if (!CommandHistory.ContainsKey(Cycles))
+                    if (!RegistryHistory.ContainsKey(Cycles))
                     {
-                        CommandHistory[Cycles] = CommandHistory[Cycles - 1];
+                        RegistryHistory[Cycles] = RegistryHistory[Cycles - 1];
                     }
                     break;
                 case "addx":
-                    if (!CommandHistory.ContainsKey(Cycles + 1))
+                    if (!RegistryHistory.ContainsKey(Cycles + 1))
                     {
-                        CommandHistory[Cycles + 1] = Value;
+                        RegistryHistory[Cycles + 1] = Value;
                     }
-                    CommandHistory[Cycles + 2] = Value;
+                    RegistryHistory[Cycles + 2] = Value;
 
                     Value += int.Parse(command[1]);
                     Cycles += 2;
-                    CommandHistory[Cycles + 1] = Value;
+                    RegistryHistory[Cycles + 1] = Value;
 
                     break;
             }
         }
-        return $"{(CommandHistory[20] * 20)
-            + (CommandHistory[60] * 60)
-            + (CommandHistory[100] * 100)
-            + (CommandHistory[140] * 140)
-            + (CommandHistory[180] * 180)
-            + (CommandHistory[220] * 220)}";
+        return $"{(RegistryHistory[20] * 20)
+            + (RegistryHistory[60] * 60)
+            + (RegistryHistory[100] * 100)
+            + (RegistryHistory[140] * 140)
+            + (RegistryHistory[180] * 180)
+            + (RegistryHistory[220] * 220)}";
     }
 
     public string Puzzle2()
@@ -50,10 +50,10 @@ class Day10 : IDay
         var output = new StringBuilder();
         output.AppendLine();
         int offset = 0;
-        for (int pixel = 1; pixel < CommandHistory.Count(); pixel++)
+        for (int pixel = 1; pixel < RegistryHistory.Count(); pixel++)
         {
             int pixelPosition = pixel - offset;
-            if (CommandHistory[pixel] <= pixelPosition && CommandHistory[pixel] + 2 >= pixelPosition)
+            if (RegistryHistory[pixel] <= pixelPosition && RegistryHistory[pixel] + 2 >= pixelPosition)
                 output.Append("#");
             else
                 output.Append(".");
