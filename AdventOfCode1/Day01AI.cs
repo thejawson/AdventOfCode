@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 //Code created by https://chat.openai.com/chat 
 class Day01AI : IDay

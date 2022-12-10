@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace AdventOfCode;
 class Day10 : IDay
@@ -37,12 +36,12 @@ class Day10 : IDay
                     break;
             }
         }
-        return $"{(RegistryHistory[20] * 20)
-            + (RegistryHistory[60] * 60)
-            + (RegistryHistory[100] * 100)
-            + (RegistryHistory[140] * 140)
-            + (RegistryHistory[180] * 180)
-            + (RegistryHistory[220] * 220)}";
+        return $"{(RegistryHistory[20] * 20) +
+            (RegistryHistory[60] * 60) +
+            (RegistryHistory[100] * 100) +
+            (RegistryHistory[140] * 140) +
+            (RegistryHistory[180] * 180) +
+            (RegistryHistory[220] * 220)}";
     }
 
     public string Puzzle2()
