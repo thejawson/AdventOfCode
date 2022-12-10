@@ -1,9 +1,9 @@
 ﻿namespace AdventOfCode;
 class Day03 : IDay
 {
-    private string[] BagList = Input.Split("\r\n");
+    private readonly string[] BagList = Input.Split("\r\n");
 
-    public string Puzzle1() => BagList.Select(m => Priority(m)).Sum().ToString();
+    public string Puzzle1() => BagList.Sum(Priority).ToString();
 
     public string Puzzle2()
     {

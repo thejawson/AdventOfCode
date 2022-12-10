@@ -3,68 +3,52 @@
 namespace AdventOfCode;
 class Day10 : IDay
 {
-    private IEnumerable<string[]> Commands = Input.Split("\r\n").Select(x => x.Split(' '));
-    private int Value = 1;
+    private readonly IEnumerable<string[]> Commands = Input.Split("\r\n").Select(x => x.Split(' '));
     private int Cycles = 0;
-    private Dictionary<int, int> RegistryHistory = new();
+    private readonly Dictionary<int, int> RegistryHistory = new() { { 0, 1 } };
+    private const char LiteChar = (char)166;
 
-    public string Puzzle1()
-    {
-        RegistryHistory[0] = Value;
-        foreach (var command in Commands)
-        {
-            switch (command[0])
-            {
-                case "noop":
-                    Cycles++;
-                    if (!RegistryHistory.ContainsKey(Cycles))
-                    {
-                        RegistryHistory[Cycles] = RegistryHistory[Cycles - 1];
-                    }
-                    break;
-                case "addx":
-                    if (!RegistryHistory.ContainsKey(Cycles + 1))
-                    {
-                        RegistryHistory[Cycles + 1] = Value;
-                    }
-                    RegistryHistory[Cycles + 2] = Value;
-
-                    Value += int.Parse(command[1]);
-                    Cycles += 2;
-                    RegistryHistory[Cycles + 1] = Value;
-
-                    break;
-            }
-        }
-        return $"{(RegistryHistory[20] * 20) +
+    public Day10() => Commands.ToList().ForEach(m => AddToHistory(m));
+    
+    public string Puzzle1() => $"{(RegistryHistory[20] * 20) +
             (RegistryHistory[60] * 60) +
             (RegistryHistory[100] * 100) +
             (RegistryHistory[140] * 140) +
             (RegistryHistory[180] * 180) +
             (RegistryHistory[220] * 220)}";
+
+    private void AddToHistory(string[] command)
+    {
+        switch (command[0])
+        {
+            case "noop":
+                Cycles++;
+                if (!RegistryHistory.ContainsKey(Cycles))
+                    RegistryHistory[Cycles] = RegistryHistory[Cycles - 1];
+                break;
+            case "addx":
+                if (!RegistryHistory.ContainsKey(Cycles + 1))
+                    RegistryHistory[Cycles + 1] = RegistryHistory[Cycles];
+                RegistryHistory[Cycles + 2] = RegistryHistory[Cycles + 1];
+                RegistryHistory[Cycles + 3] = RegistryHistory[Cycles+2] + int.Parse(command[1]);
+                Cycles += 2;
+                break;
+        }
     }
 
     public string Puzzle2()
     {
-        for (int i = 0; i < 255; i++)
-        {
-            Console.WriteLine($"{i}:{(char)i}");
-        }
         var output = new StringBuilder();
         output.AppendLine();
-        int offset = 0;
         for (int pixel = 1; pixel < RegistryHistory.Count(); pixel++)
         {
-            int pixelPosition = pixel - offset;
+            int pixelPosition = pixel % 40;
             if (RegistryHistory[pixel] <= pixelPosition && RegistryHistory[pixel] + 2 >= pixelPosition)
-                output.Append( (char)166);
+                output.Append(LiteChar);
             else
                 output.Append(" ");
-            if (pixel > 0 && pixel % 40 == 0)
-            {
+            if (pixelPosition == 0)
                 output.AppendLine();
-                offset += 40;
-            }
         }
         return output.ToString();
     }

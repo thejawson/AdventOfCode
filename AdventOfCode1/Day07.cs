@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode;
+﻿using System.Collections.Generic;
+
+namespace AdventOfCode;
 class Day07 : IDay
 {
     class Folder
@@ -6,9 +8,9 @@ class Day07 : IDay
         public const int LargeFolderSize = 100000;
         public const int TotalSpace = 70000000;
         public const int SpaceNeeded = 30000000;
-        public List<Folder> Folders = new();
+        public readonly List<Folder> Folders = new();
         public Folder? Parent;
-        public List<int> Files = new();
+        public readonly List<int> Files = new();
 
         public Folder(string name, Folder parent)
         {
@@ -57,7 +59,7 @@ class Day07 : IDay
         }
     }
 
-    private Folder Root = new("root");
+    private readonly Folder Root = new("root");
     private Folder Current;
 
     public Day07()
@@ -65,7 +67,7 @@ class Day07 : IDay
         Current = Root;
         foreach (string line in Input.Split("\r\n"))
         {
-            var command = line.Split(' ');
+            ReadOnlySpan<string> command = line.Split(' ');
             switch (command[0])
             {
                 case "$":
@@ -85,7 +87,7 @@ class Day07 : IDay
 
     public string Puzzle2() => Root.FindFolderToRemove().ToString();
 
-    private void ExecuteCommand(string[] command)
+    private void ExecuteCommand(ReadOnlySpan<string> command)
     {
         switch (command[1])
         {
@@ -93,17 +95,12 @@ class Day07 : IDay
                 break;
             case "cd":
                 if (command[2] == "..")
-                    Current = Current.Parent;
+                    Current = Current?.Parent ?? Root;
                 else
                 {
-                    if (Current.Folders.Any(m => m.Name == command[2]))
-                        Current = Current.Folders.First(m => m.Name == command[2]);
-                    else
-                    {
-                        var folder = new Folder(command[2], Current);
-                        Current.Folders.Add(folder);
-                        Current = folder;
-                    }
+                    var folder = new Folder(command[2], Current);
+                    Current.Folders.Add(folder);
+                    Current = folder;
                 }
                 break;
         }

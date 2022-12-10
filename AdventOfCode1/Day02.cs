@@ -1,70 +1,46 @@
 ﻿namespace AdventOfCode;
 class Day02 : IDay
 {
-    private string[] GameList = Input.Split("\r\n");
+    private readonly string[] GameList = Input.Split("\r\n");
 
-    public string Puzzle1() => GameList.Select(m => Score(m)).Sum().ToString();
+    public string Puzzle1() => GameList.Sum(m => Score(m)).ToString();
 
-    public string Puzzle2() => GameList.Select(m => Score2(m)).Sum().ToString();
+    public string Puzzle2() => GameList.Sum(m => Score2(m)).ToString();
 
-    public int Score(string thrown)
+    public int Score(ReadOnlySpan<char> thrown)
     {
-        switch (thrown[0], thrown[2])
+        return (thrown[0], thrown[2])
+            switch
         {
-            case ('A', 'X'):
-                return 4;
-            case ('B', 'X'):
-                return 1;
-            case ('C', 'X'):
-                return 7;
-
-            case ('A', 'Y'):
-                return 8;
-            case ('B', 'Y'):
-                return 5;
-            case ('C', 'Y'):
-                return 2;
-
-            case ('A', 'Z'):
-                return 3;
-            case ('B', 'Z'):
-                return 9;
-            case ('C', 'Z'):
-                return 6;
-
-            default:
-                return 0;
-        }
+            ('A', 'X') => 4,
+            ('B', 'X') => 1,
+            ('C', 'X') => 7,
+            ('A', 'Y') => 8,
+            ('B', 'Y') => 5,
+            ('C', 'Y') => 2,
+            ('A', 'Z') => 3,
+            ('B', 'Z') => 9,
+            ('C', 'Z') => 6,
+            _ => 0,
+        };
     }
 
-    public int Score2(string thrown)
+    public int Score2(ReadOnlySpan<char> thrown)
     {
-        switch (thrown[0], thrown[2])
+        return (thrown[0], thrown[2])
+            switch
         {
-            case ('A', 'X'):
-                return 3;
-            case ('B', 'X'):
-                return 1;
-            case ('C', 'X'):
-                return 2;
-
-            case ('A', 'Y'):
-                return 4;
-            case ('B', 'Y'):
-                return 5;
-            case ('C', 'Y'):
-                return 6;
-
-            case ('A', 'Z'):
-                return 8;
-            case ('B', 'Z'):
-                return 9;
-            case ('C', 'Z'):
-                return 7;
-
-            default:
-                return 0;
-        }
+            ('A', 'X') => 3,
+            ('B', 'X') => 1,
+            ('C', 'X') => 2,
+            ('A', 'Y') => 4,
+            ('B', 'Y') => 5,
+            ('C', 'Y') => 6,
+            ('A', 'Z') => 8,
+            ('B', 'Z') => 9,
+            ('C', 'Z') => 7,
+            _ => 0,
+        };
     }
 
     const string Input = @"B X

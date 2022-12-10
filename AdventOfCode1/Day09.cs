@@ -5,7 +5,7 @@ class Day09 : IDay
     private (int X, int Y) TailPosition = (0, 0);
     private readonly HashSet<string> TailLocations = new();
     private (int X, int Y)[] Segments = new (int X, int Y)[9];
-    private List<string> Lines = Input.Split("\r\n").ToList();
+    private readonly List<string> Lines = Input.Split("\r\n").ToList();
 
     public string Puzzle1()
     {

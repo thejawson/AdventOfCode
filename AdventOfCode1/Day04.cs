@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode;
 class Day04 : IDay
 {
-    private IEnumerable<string[]> ElfRange = Input.Split("\r\n").Select(m => m.Split(',')).ToList();
+    private readonly IEnumerable<string[]> ElfRange = Input.Split("\r\n").Select(m => m.Split(',')).ToList();
 
     public string Puzzle1() => ElfRange.Count(m => IsDuplicate(m)).ToString();
 

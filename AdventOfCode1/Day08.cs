@@ -1,9 +1,9 @@
 ﻿namespace AdventOfCode;
 class Day08 : IDay
 {
-    private int Width = 0;
-    private int Height = 0;
-    private int[][] ParseList = Input.Split("\r\n").Select(m => m.ToCharArray().Select(c => int.Parse(c.ToString())).ToArray()).ToArray();
+    private readonly int Width = 0;
+    private readonly int Height = 0;
+    private readonly int[][] ParseList = Input.Split("\r\n").Select(m => m.ToCharArray().Select(c => int.Parse(c.ToString())).ToArray()).ToArray();
 
     public Day08()
     {
