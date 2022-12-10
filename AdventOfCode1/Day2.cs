@@ -1,11 +1,13 @@
 ﻿namespace AdventOfCode;
 class Day2 : IDay
 {
-    public string Puzzle1() => Input.Split("\r\n").Select(m => Score(m)).Sum().ToString();
+    private string[] GameList = Input.Split("\r\n");
 
-    public string Puzzle2() => Input.Split("\r\n").Select(m => Score2(m)).Sum().ToString();
+    public string Puzzle1() => GameList.Select(m => Score(m)).Sum().ToString();
 
-    public static int Score(string thrown)
+    public string Puzzle2() => GameList.Select(m => Score2(m)).Sum().ToString();
+
+    public int Score(string thrown)
     {
         switch (thrown[0], thrown[2])
         {
@@ -35,7 +37,7 @@ class Day2 : IDay
         }
     }
 
-    public static int Score2(string thrown)
+    public int Score2(string thrown)
     {
         switch (thrown[0], thrown[2])
         {

@@ -1,24 +1,22 @@
-﻿
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 class Day9 : IDay
 {
-    private (int X, int Y) HeadPosition=(0,0);
+    private (int X, int Y) HeadPosition = (0, 0);
     private (int X, int Y) TailPosition = (0, 0);
     private readonly HashSet<string> TailLocations = new();
     private (int X, int Y)[] Segments = new (int X, int Y)[9];
+    private List<string> Lines = Input.Split("\r\n").ToList();
 
     public string Puzzle1()
     {
-        Input.Split("\r\n").ToList().ForEach(m => Move(m.Split(" ")));
-
+        Lines.ForEach(m => Move(m.Split(" ")));
         return TailLocations.Count.ToString();
     }
 
     public string Puzzle2()
     {
         TailLocations.Clear();
-        Input.Split("\r\n").ToList().ForEach(m => Move(m.Split(" "), true));
-
+        Lines.ForEach(m => Move(m.Split(" "), true));
         return TailLocations.Count.ToString();
     }
 
@@ -26,7 +24,7 @@ class Day9 : IDay
     {
         for (int i = 0; i < int.Parse(action[1]); i++)
         {
-            switch(action[0])
+            switch (action[0])
             {
                 case "L":
                     HeadPosition.X--;

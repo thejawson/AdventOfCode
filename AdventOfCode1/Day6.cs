@@ -7,7 +7,7 @@ class Day6 : IDay
 
     public string Puzzle2() => NonRepeatingWork(14);
 
-    private static string NonRepeatingWork(int length)
+    private string NonRepeatingWork(int length)
     {
         for (int i = length; i < Input.Length; i++)
             if (Input.Take(new Range(i - length, i)).Distinct().Count() == length)

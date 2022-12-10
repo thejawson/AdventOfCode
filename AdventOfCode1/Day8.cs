@@ -1,15 +1,12 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 class Day8 : IDay
 {
-    private static int Width = 0;
-    private static int Height = 0;
-    private static int[][] ParseList;
+    private int Width = 0;
+    private int Height = 0;
+    private int[][] ParseList = Input.Split("\r\n").Select(m => m.ToCharArray().Select(c => int.Parse(c.ToString())).ToArray()).ToArray();
 
     public Day8()
     {
-        ParseList = Input.Split("\r\n").Select(m => m.ToCharArray().Select(c => int.Parse(c.ToString())).ToArray()).ToArray();
         Width = ParseList.Length;
         Height = ParseList[0].Length;
     }
@@ -17,19 +14,19 @@ class Day8 : IDay
     public string Puzzle1()
     {
         int visibleTrees = 0;
-        for (int i = 0; i < ParseList.Length; i++)
-            for (int n = 0; n < ParseList[0].Length; n++)
+        for (int i = 0; i < Width; i++)
+            for (int n = 0; n < Height; n++)
                 if (CheckPosition(i, n))
                     visibleTrees++;
-        
+
         return visibleTrees.ToString();
     }
 
     public string Puzzle2()
     {
         int max = 0;
-        for (int i = 0; i < ParseList.Length; i++)
-            for (int n = 0; n < ParseList[0].Length; n++)
+        for (int i = 0; i < Width; i++)
+            for (int n = 0; n < Height; n++)
             {
                 int height = ParseList[i][n];
                 int value = ColumnCount(i, n, height) * RowCount(i, n, height);
@@ -45,32 +42,32 @@ class Day8 : IDay
         if (xPosition == 0 || yPosition == 0 || xPosition == Width - 1 || yPosition == Height - 1)
             return true;
         int treeHeight = ParseList[xPosition][yPosition];
-        
+
         return CheckColumn(xPosition, treeHeight, 0, yPosition) ||
             CheckColumn(xPosition, treeHeight, yPosition + 1, Height) ||
             CheckRow(yPosition, treeHeight, 0, xPosition) ||
             CheckRow(yPosition, treeHeight, xPosition + 1, Height);
     }
 
-    private static bool CheckColumn(int xPosition, int treeHeight, int startPosition, int endPosition)
+    private bool CheckColumn(int xPosition, int treeHeight, int startPosition, int endPosition)
     {
         for (int i = startPosition; i < endPosition; i++)
             if (ParseList[xPosition][i] >= treeHeight)
                 return false;
-        
+
         return true;
     }
 
-    private static bool CheckRow(int yPosition, int treeHeight, int startPosition, int endPosition)
+    private bool CheckRow(int yPosition, int treeHeight, int startPosition, int endPosition)
     {
         for (int i = startPosition; i < endPosition; i++)
             if (ParseList[i][yPosition] >= treeHeight)
                 return false;
-        
+
         return true;
     }
 
-    private static int RowCount(int xPosition, int yPosition, int treeHeight)
+    private int RowCount(int xPosition, int yPosition, int treeHeight)
     {
         int left = 0;
         if (xPosition > 0)
@@ -92,7 +89,7 @@ class Day8 : IDay
         return right * left;
     }
 
-    private static int ColumnCount(int xPosition, int yPosition, int treeHeight)
+    private int ColumnCount(int xPosition, int yPosition, int treeHeight)
     {
         int above = 0;
         if (yPosition > 0)
@@ -114,13 +111,6 @@ class Day8 : IDay
 
         return above * below;
     }
-
-    const string Input1 =
-@"30373
-25512
-65332
-33549
-35390";
 
     const string Input =
 @"020111211022103023211142403044034010412103202221251542233334311102303044440313120021223120332211221

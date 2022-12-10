@@ -1,38 +1,33 @@
 ﻿namespace AdventOfCode;
 class Day4 : IDay
 {
-    private List<string[]> Data;
-    public Day4()
-    {
-        Data = Input.Split("\r\n").Select(m => m.Split(',')).ToList();
-    }
-    public string Puzzle1() => Data.Count(m => IsDuplicate(m)).ToString();
+    private IEnumerable<string[]> ElfRange = Input.Split("\r\n").Select(m => m.Split(',')).ToList();
 
-    public string Puzzle2() => Data.Count(m => IsOverlap(m)).ToString();
+    public string Puzzle1() => ElfRange.Count(m => IsDuplicate(m)).ToString();
 
-    private static bool IsDuplicate(string[] assignment)
+    public string Puzzle2() => ElfRange.Count(m => IsOverlap(m)).ToString();
+
+    private bool IsDuplicate(string[] assignment)
     {
         ParseElfs(assignment, out var elf1, out var elf2);
-
         return (IsBetween(elf1[0], elf2[0], elf2[1]) && IsBetween(elf1[1], elf2[0], elf2[1]))
             || (IsBetween(elf2[0], elf1[0], elf1[1]) && IsBetween(elf2[1], elf1[0], elf1[1]));
     }
 
-    private static bool IsOverlap(string[] assignment)
+    private bool IsOverlap(string[] assignment)
     {
         ParseElfs(assignment, out var elf1, out var elf2);
-
         return IsBetween(elf1[0], elf2[0], elf2[1]) || IsBetween(elf1[1], elf2[0], elf2[1])
             || IsBetween(elf2[0], elf1[0], elf1[1]) || IsBetween(elf2[1], elf1[0], elf1[1]);
     }
 
-    private static void ParseElfs(string[] assignment, out int[] elf1, out int[] elf2)
+    private void ParseElfs(string[] assignment, out int[] elf1, out int[] elf2)
     {
         elf1 = assignment[0].Split("-").Select(m => int.TryParse(m, out int results) ? results : 0).ToArray();
         elf2 = assignment[1].Split("-").Select(m => int.TryParse(m, out int results) ? results : 0).ToArray();
     }
 
-    private static bool IsBetween(int between, int start, int end) => between >= start && between <= end;
+    private bool IsBetween(int between, int start, int end) => between >= start && between <= end;
 
     const string Input = @"99-99,18-99
 2-86,1-86

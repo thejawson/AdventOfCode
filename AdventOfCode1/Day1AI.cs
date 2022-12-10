@@ -4,60 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode
+namespace AdventOfCode;
+
+//Code created by https://chat.openai.com/chat 
+class Day1AI : IDay
 {
-    //Code created by https://chat.openai.com/chat 
-    class Day1AI : IDay
+    string IDay.Puzzle1()
     {
-        string IDay.Puzzle1()
+        // Create a dictionary to store the calorie counts for each elf
+        Dictionary<string, int> elfCalories = new Dictionary<string, int>();
+
+        // Read the input
+        int elfIndex = 0;
+        foreach (var line in Input.Split("\r\n"))
         {
-            // Create a dictionary to store the calorie counts for each elf
-            Dictionary<string, int> elfCalories = new Dictionary<string, int>();
-
-            // Read the input
-            int elfIndex = 0;
-            foreach (var line in Input.Split("\r\n"))
+            // Check if the line is empty
+            if (line.Trim() == "")
             {
-                // Check if the line is empty
-                if (line.Trim() == "")
-                {
-                    // The line is empty, so increment the elf index to move to the next elf
-                    elfIndex++;
-                }
-                else
-                {
-                    // The line is not empty, so add the calorie count to the total for the current elf
-                    if (!elfCalories.ContainsKey(elfIndex.ToString()))
-                    {
-                        elfCalories[elfIndex.ToString()] = 0;
-                    }
-                    elfCalories[elfIndex.ToString()] += int.Parse(line);
-                }
+                // The line is empty, so increment the elf index to move to the next elf
+                elfIndex++;
             }
-
-            // Find the elf with the highest calorie count
-            int maxCalories = 0;
-            string maxElf = "";
-            foreach (string elfName in elfCalories.Keys)
+            else
             {
-                if (elfCalories[elfName] > maxCalories)
+                // The line is not empty, so add the calorie count to the total for the current elf
+                if (!elfCalories.ContainsKey(elfIndex.ToString()))
                 {
-                    maxCalories = elfCalories[elfName];
-                    maxElf = elfName;
+                    elfCalories[elfIndex.ToString()] = 0;
                 }
+                elfCalories[elfIndex.ToString()] += int.Parse(line);
             }
-
-            // Print the elf with the highest calorie count
-            return $"Elf {maxElf} has the most calories: {maxCalories}";
         }
 
-        
-        public string Puzzle2()
+        // Find the elf with the highest calorie count
+        int maxCalories = 0;
+        string maxElf = "";
+        foreach (string elfName in elfCalories.Keys)
         {
-            return "";
+            if (elfCalories[elfName] > maxCalories)
+            {
+                maxCalories = elfCalories[elfName];
+                maxElf = elfName;
+            }
         }
 
-        const string Input = @"15931
+        // Print the elf with the highest calorie count
+        return $"Elf {maxElf} has the most calories: {maxCalories}";
+    }
+
+
+    public string Puzzle2()
+    {
+        return "";
+    }
+
+    const string Input = @"15931
 8782
 16940
 14614
@@ -2332,6 +2332,4 @@ namespace AdventOfCode
 4895
 3947
 1567";
-    }
 }
-    

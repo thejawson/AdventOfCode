@@ -1,10 +1,13 @@
 ﻿namespace AdventOfCode;
 class Day5 : IDay
 {
+    private List<string[]> stacks = Stacks.Split("\r\n").Select(m => m.Split(',')).ToList();
+    private List<int[]> instructions = Instructions.Split("\r\n")
+        .Select(n => n.Split(',')
+        .Select(m => int.TryParse(m, out int i) ? i - 1 : 0).ToArray()).ToList();
+
     public string Puzzle1()
     {
-        ParseInput(out var stacks, out var instructions);
-
         foreach (var instruction in instructions)
         {
             var toMove = stacks[instruction[1]].Take(instruction[0] + 1).Reverse();
@@ -17,8 +20,6 @@ class Day5 : IDay
 
     public string Puzzle2()
     {
-        ParseInput(out var stacks, out var instructions);
-
         foreach (var instruction in instructions)
         {
             var toMove = stacks[instruction[1]].Take(instruction[0] + 1);
@@ -27,14 +28,6 @@ class Day5 : IDay
         }
 
         return String.Join("", stacks.Select(m => m.First()));
-    }
-
-    private static void ParseInput(out List<string[]> stacks, out IEnumerable<int[]> instructions)
-    {
-        stacks = Stacks.Split("\r\n").Select(m => m.Split(',')).ToList();
-        instructions = Instructions.Split("\r\n")
-            .Select(n => n.Split(',')
-            .Select(m => int.TryParse(m, out int i) ? i - 1 : 0).ToArray());
     }
 
     const string Stacks = @"G,J,Z

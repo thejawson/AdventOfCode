@@ -4,61 +4,62 @@ class Day7 : IDay
 {
     class Folder
     {
-        public static int LargeFolderSize = 100000;
-        public static int TotalSpace = 70000000;
-        public static int SpaceNeeded = 30000000;
+        public const int LargeFolderSize = 100000;
+        public const int TotalSpace = 70000000;
+        public const int SpaceNeeded = 30000000;
         public List<Folder> Folders = new();
         public Folder? Parent;
         public List<int> Files = new();
-        
-        public int Size => Files.Sum() + Folders.Sum(m => m.Size);
-
-        public int SmallFoldersSize
-        {
-            get
-            {
-                int totalSize = 0;
-                foreach (Folder folder in Folders)
-                {
-                    if (folder.Size <= LargeFolderSize)
-                        totalSize += folder.Size;
-                    totalSize += folder.SmallFoldersSize;
-                }
-
-                return totalSize;
-            }
-        }
-
-        public int FindFolderToRemove(int spaceNeeded = 0)
-        {
-            if (spaceNeeded == 0)
-                spaceNeeded = SpaceNeeded - (TotalSpace - Size);
-            
-            if (Folders.Any(m => m.Size >= spaceNeeded))
-                return Folders.Where(m => m.Size >= spaceNeeded).Select(m => m.FindFolderToRemove(spaceNeeded)).Min();
-            else
-                return Size;
-        }
-
-        private string FolderName = "";
-        public string Name
-        {
-            get
-            {
-                if (Parent is null)
-                    return "";
-                return $"{Parent.Name}/{FolderName}";
-            }
-            set => FolderName = value;
-        }
 
         public Folder(string name, Folder parent)
         {
             Name = name;
             Parent = parent;
         }
+
         public Folder(string name) => Name = name;
+
+        public int Size => Files.Sum() + Folders.Sum(m => m.Size);
+
+        public int SmallFoldersSize()
+        {
+            int totalSize = 0;
+            foreach (Folder folder in Folders)
+            {
+                if (folder.Size <= LargeFolderSize)
+                    totalSize += folder.Size;
+                totalSize += folder.SmallFoldersSize();
+            }
+
+            return totalSize;
+        }
+
+        public int FindFolderToRemove(int spaceNeeded = 0)
+        {
+            if (spaceNeeded == 0)
+                spaceNeeded = SpaceNeeded - (TotalSpace - Size);
+
+            if (Folders.Any(m => m.Size >= spaceNeeded))
+                return Folders.Where(m => m.Size >= spaceNeeded).Select(m => m.FindFolderToRemove(spaceNeeded)).Min();
+            else
+                return Size;
+        }
+
+        private string _folderName = "";
+        public string Name
+        {
+            get
+            {
+                if (Parent is null)
+                    return "";
+                return $"{Parent.Name}/{_folderName}";
+            }
+            set => _folderName = value;
+        }
     }
+
+    private Folder Root = new("root");
+    private Folder Current;
 
     public Day7()
     {
@@ -81,10 +82,7 @@ class Day7 : IDay
         }
     }
 
-    private Folder Root = new("root");
-    private Folder Current;
-
-    public string Puzzle1() => Root.SmallFoldersSize.ToString();
+    public string Puzzle1() => Root.SmallFoldersSize().ToString();
 
     public string Puzzle2() => Root.FindFolderToRemove().ToString();
 
@@ -100,9 +98,7 @@ class Day7 : IDay
                 else
                 {
                     if (Current.Folders.Any(m => m.Name == command[2]))
-                    {
                         Current = Current.Folders.First(m => m.Name == command[2]);
-                    }
                     else
                     {
                         var folder = new Folder(command[2], Current);
@@ -111,8 +107,6 @@ class Day7 : IDay
                     }
                 }
                 break;
-
-            default: break;
         }
     }
 

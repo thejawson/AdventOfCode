@@ -1,14 +1,14 @@
 ﻿namespace AdventOfCode;
 class Day1 : IDay
 {
-    public string Puzzle1() => ParseList().Max().ToString();
+    private IEnumerable<int> CaloryList = Input.Split("\r\n\r\n")
+            .Select(m => m.Split("\r\n")
+            .Select(m => int.TryParse(m, out int calories) ? calories : 0)
+            .Sum());
 
-    public string Puzzle2() => ParseList().OrderByDescending(m => m).Take(3).Sum().ToString();
+    public string Puzzle1() => CaloryList.Max().ToString();
 
-    private static IEnumerable<int> ParseList() => Input.Split("\r\n\r\n")
-        .Select(m => m.Split("\r\n")
-        .Select(m => int.TryParse(m, out int calories) ? calories : 0)
-        .Sum());
+    public string Puzzle2() => CaloryList.OrderByDescending(m => m).Take(3).Sum().ToString();
 
     const string Input = @"15931
 8782
