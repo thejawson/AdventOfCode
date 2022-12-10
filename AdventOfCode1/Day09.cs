@@ -76,7 +76,7 @@ class Day09 : IDay
         return trailingSegment;
     }
 
-    const string Input = @"L 2
+    private const string Input = @"L 2
 R 2
 U 1
 R 2

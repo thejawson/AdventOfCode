@@ -32,7 +32,7 @@ class Day05 : IDay
         return String.Join("", stacks.Select(m => m.First()));
     }
 
-    const string Stacks = @"G,J,Z
+    private const string Stacks = @"G,J,Z
 C,V,F,W,P,R,L,Q
 R,G,L,C,M,P,F
 M,H,P,W,B,F,L
@@ -42,7 +42,7 @@ V,B,S,F,H
 S,Z,J,F
 T,B,H,F,P,D,C,M";
 
-    const string Instructions = @"1,5,6
+    private const string Instructions = @"1,5,6
 5,6,7
 10,7,3
 4,8,4

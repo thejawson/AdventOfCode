@@ -106,7 +106,7 @@ class Day07 : IDay
         }
     }
 
-    const string Input =
+    private const string Input =
 @"$ ls
 dir fchrtcbh
 dir hlnbrj

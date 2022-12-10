@@ -10,7 +10,7 @@ class Day01 : IDay
 
     public string Puzzle2() => CaloryList.OrderByDescending(m => m).Take(3).Sum().ToString();
 
-    const string Input = @"15931
+    private const string Input = @"15931
 8782
 16940
 14614

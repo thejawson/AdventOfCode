@@ -7,7 +7,7 @@ class Day02 : IDay
 
     public string Puzzle2() => GameList.Sum(m => Score2(m)).ToString();
 
-    public int Score(ReadOnlySpan<char> thrown)
+    private int Score(ReadOnlySpan<char> thrown)
     {
         return (thrown[0], thrown[2])
             switch
@@ -25,7 +25,7 @@ class Day02 : IDay
         };
     }
 
-    public int Score2(ReadOnlySpan<char> thrown)
+    private int Score2(ReadOnlySpan<char> thrown)
     {
         return (thrown[0], thrown[2])
             switch
@@ -43,7 +43,7 @@ class Day02 : IDay
         };
     }
 
-    const string Input = @"B X
+    private const string Input = @"B X
 B Y
 A Y
 B Y

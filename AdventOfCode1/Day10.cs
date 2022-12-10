@@ -53,7 +53,7 @@ class Day10 : IDay
         return output.ToString();
     }
 
-    const string Input = @"noop
+    private const string Input = @"noop
 noop
 noop
 addx 4

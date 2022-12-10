@@ -38,7 +38,7 @@ class Day03 : IDay
         return ascii < 97 ? ascii - 38 : ascii - 96;
     }
 
-    const string Input = @"qFdBBvtHHfvRlfvsqldvqjPpQmnQmjnjjjTRTLGRNG
+    private const string Input = @"qFdBBvtHHfvRlfvsqldvqjPpQmnQmjnjjjTRTLGRNG
 ZCWhhCsJCzSJzSbzgsmPTGNNPPNGjgLTLjgn
 WJZsbJMwJcszJcScwhVltFwBFBlqddvFdHDfqq
 crtTsGTtqFThGQGCrsjTwdNJwpRdnJJwffRClpSf

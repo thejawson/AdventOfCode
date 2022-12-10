@@ -29,7 +29,7 @@ class Day04 : IDay
 
     private bool IsBetween(int between, int start, int end) => between >= start && between <= end;
 
-    const string Input = @"99-99,18-99
+    private const string Input = @"99-99,18-99
 2-86,1-86
 9-21,10-22
 1-24,7-23

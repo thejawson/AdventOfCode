@@ -51,7 +51,7 @@ class Day01AI : IDay
         return "";
     }
 
-    const string Input = @"15931
+    private const string Input = @"15931
 8782
 16940
 14614
