@@ -1,9 +1,11 @@
 ﻿using System.Linq;
+using System.Numerics;
 
 namespace AdventOfCode;
 
 internal class Day11 : IDay
 {
+    private static int CommonFactor = 1;
     private readonly List<Item> Items = new List<Item>();
     private readonly List<Monkey> Monkeys;
     private Dictionary<int, int> inspections = new Dictionary<int, int>();
@@ -11,8 +13,13 @@ internal class Day11 : IDay
     public Day11()
     {
         Monkeys = Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m, Items)).ToList();
+        inspections.Clear();
+        CommonFactor = 1;
         foreach (var monkey in Monkeys)
+        {
             inspections.Add(monkey.Id, 0);
+            CommonFactor *= monkey.DivisibleBy;
+        }
     }
 
     public string Puzzle1()
@@ -22,21 +29,24 @@ internal class Day11 : IDay
                 foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
                 {
                     inspections[monkey.Id]++;
-                    monkey.Inspect(item);
+                    monkey.Inspect(item, true);
                 }
+
         var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
         return $"{monkeyBusiness[0] * monkeyBusiness[1]}";
     }
 
     public string Puzzle2()
     {
-        return "";
-    }
-
-    private void PrintItems()
-    {
-        foreach (Item item in Items.OrderBy(m => m.Monkey).ThenBy(m => m.Worry))
-            Console.WriteLine(item.ToString());
+        for (int i = 0; i < 10000; i++)
+            foreach (var monkey in Monkeys)
+                foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
+                {
+                    inspections[monkey.Id]++;
+                    monkey.Inspect(item, false);
+                }
+        var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
+        return $"{new BigInteger(monkeyBusiness[0]) * new BigInteger(monkeyBusiness[1])}";
     }
 
     private class Item
@@ -49,15 +59,13 @@ internal class Day11 : IDay
             Worry = worry;
             Monkey = monkey;
         }
-
-        public new string ToString() => $"{Monkey} {Worry}";
     }
 
     private class Monkey
     {
+        public static long Max = 0;
+        public readonly int DivisibleBy;
         public readonly int Id;
-
-        private readonly int DivisibleBy;
         private readonly int Monkey1;
         private readonly int Monkey2;
         private readonly int OperationNumber;
@@ -80,7 +88,7 @@ internal class Day11 : IDay
                 items.Add(new Item(Id, int.Parse(itemList)));
         }
 
-        public void Inspect(Item item)
+        public void Inspect(Item item, bool lowerWorry)
         {
             //using -1 for when it does the action to the currenty Worry
             var number = OperationNumber == -1 ? item.Worry : OperationNumber;
@@ -97,12 +105,13 @@ internal class Day11 : IDay
                 default:
                     break;
             }
-            item.Worry /= 3;
 
-            if (item.Worry % DivisibleBy == 0)
-                item.Monkey = Monkey1;
-            else
-                item.Monkey = Monkey2;
+            if (lowerWorry)
+                item.Worry /= 3;
+
+            item.Worry = item.Worry % CommonFactor;
+
+            item.Monkey = item.Worry % DivisibleBy == 0 ? Monkey1 : item.Monkey = Monkey2;
         }
     }
 }
