@@ -62,5 +62,4 @@ Console.WriteLine($"Run time: {stopWatch.Elapsed}");
 //▌ ▌  ▌    ▌  ▌ ▌    ▌ ▌  ▌    ▌  ▌ ▌  ▌
 //▌  ▌ ▌▌▌▌ ▌  ▌ ▌    ▌  ▌ ▌▌▌▌  ▌▌  ▌▌▌
 
-//not 28552, 36260 too low
-//12036374, 99540
+//99852

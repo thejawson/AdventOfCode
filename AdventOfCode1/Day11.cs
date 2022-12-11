@@ -17,18 +17,13 @@ internal class Day11 : IDay
 
     public string Puzzle1()
     {
-        //PrintItems();
         for (int i = 0; i < 20; i++)
-        {
             foreach (var monkey in Monkeys)
                 foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
                 {
                     inspections[monkey.Id]++;
                     monkey.Inspect(item);
                 }
-            //Console.WriteLine(i);
-            //PrintItems();
-        }
         var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
         return $"{monkeyBusiness[0] * monkeyBusiness[1]}";
     }
@@ -47,10 +42,9 @@ internal class Day11 : IDay
     private class Item
     {
         public int Monkey;
+        public long Worry;
 
-        public int Worry;
-
-        public Item(int monkey, int worry)
+        public Item(int monkey, long worry)
         {
             Worry = worry;
             Monkey = monkey;
@@ -64,18 +58,17 @@ internal class Day11 : IDay
         public readonly int Id;
 
         private readonly int DivisibleBy;
-
         private readonly int Monkey1;
         private readonly int Monkey2;
-        private readonly char Operation;
-        private readonly int Operator;
+        private readonly int OperationNumber;
+        private readonly char Operator;
 
         public Monkey(string input, List<Item> items)
         {
             var lines = input.Split("\r\n");
             Id = int.Parse(lines[0][7].ToString());
-            Operation = lines[2][23];
-            Operator = int.TryParse(lines[2].Split(' ').Last(), out int i) ? i : -1;
+            Operator = lines[2][23];
+            OperationNumber = int.TryParse(lines[2].Split(' ').Last(), out int i) ? i : -1;
             DivisibleBy = int.Parse(lines[3].Split(' ').Last());
             Monkey1 = int.Parse(lines[4].Split(' ').Last());
             Monkey2 = int.Parse(lines[5].Split(' ').Last());
@@ -89,9 +82,9 @@ internal class Day11 : IDay
 
         public void Inspect(Item item)
         {
-            //using -1 for when it does the action to the currenty value
-            int number = Operator == -1 ? item.Worry : Operator;
-            switch (Operation)
+            //using -1 for when it does the action to the currenty Worry
+            var number = OperationNumber == -1 ? item.Worry : OperationNumber;
+            switch (Operator)
             {
                 case '*':
                     item.Worry *= number;
@@ -105,6 +98,7 @@ internal class Day11 : IDay
                     break;
             }
             item.Worry /= 3;
+
             if (item.Worry % DivisibleBy == 0)
                 item.Monkey = Monkey1;
             else
