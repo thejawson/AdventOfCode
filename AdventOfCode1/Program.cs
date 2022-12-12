@@ -1,7 +1,7 @@
 ﻿using AdventOfCode;
 using System.Diagnostics;
 
-Stopwatch stopWatch = Stopwatch.StartNew();
+var startTime = Stopwatch.GetTimestamp();
 
 List<IDay> days = new()
 {
@@ -23,8 +23,7 @@ List<IDay> days = new()
 for (int i = 0; i < days.Count; i++)
     Console.WriteLine($"Day {i + 1}\n    Results 1 {days[i].Puzzle1()}\n    Results 2 {days[i].Puzzle2()}");
 
-stopWatch.Stop();
-Console.WriteLine($"Run time: {stopWatch.Elapsed}");
+Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 
 //Day 1
 //    Results 1 70116
@@ -62,7 +61,9 @@ Console.WriteLine($"Run time: {stopWatch.Elapsed}");
 //▌▌▌  ▌    ▌  ▌ ▌▌▌  ▌▌▌  ▌    ▌  ▌ ▌  ▌▌
 //▌ ▌  ▌    ▌  ▌ ▌    ▌ ▌  ▌    ▌  ▌ ▌  ▌▌
 //▌  ▌ ▌▌▌▌ ▌  ▌ ▌    ▌  ▌ ▌▌▌▌  ▌▌  ▌▌▌
-
 //Day 11
 //    Results 1 98908
 //    Results 2 25935263541
+//Day 12
+//    Results 1 339
+//    Results 2 332
