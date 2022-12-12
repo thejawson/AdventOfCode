@@ -7,14 +7,26 @@ internal class Day11 : IDay
 {
     private static int CommonFactor = 1;
     private readonly List<Item> Items = new List<Item>();
-    private readonly List<Monkey> Monkeys;
     private Dictionary<int, int> inspections = new Dictionary<int, int>();
+    private List<Monkey> Monkeys = new();
 
-    public Day11()
+    public Day11() => ResetData();
+
+    public string Puzzle1() => RunInspections(20, true);
+
+    public string Puzzle2()
     {
-        Monkeys = Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m, Items)).ToList();
+        ResetData();
+        return RunInspections(10000, false);
+    }
+
+    private void ResetData()
+    {
+        Items.Clear();
         inspections.Clear();
         CommonFactor = 1;
+        Monkeys.Clear();
+        Monkeys.AddRange(Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m, Items)).ToList());
         foreach (var monkey in Monkeys)
         {
             inspections.Add(monkey.Id, 0);
@@ -22,29 +34,16 @@ internal class Day11 : IDay
         }
     }
 
-    public string Puzzle1()
+    private string RunInspections(int run, bool divideBy3)
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < run; i++)
             foreach (var monkey in Monkeys)
                 foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
                 {
                     inspections[monkey.Id]++;
-                    monkey.Inspect(item, true);
+                    monkey.Inspect(item, divideBy3);
                 }
 
-        var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
-        return $"{monkeyBusiness[0] * monkeyBusiness[1]}";
-    }
-
-    public string Puzzle2()
-    {
-        for (int i = 0; i < 10000; i++)
-            foreach (var monkey in Monkeys)
-                foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
-                {
-                    inspections[monkey.Id]++;
-                    monkey.Inspect(item, false);
-                }
         var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
         return $"{new BigInteger(monkeyBusiness[0]) * new BigInteger(monkeyBusiness[1])}";
     }
@@ -63,7 +62,6 @@ internal class Day11 : IDay
 
     private class Monkey
     {
-        public static long Max = 0;
         public readonly int DivisibleBy;
         public readonly int Id;
         private readonly int Monkey1;
@@ -100,9 +98,6 @@ internal class Day11 : IDay
 
                 case '+':
                     item.Worry += number;
-                    break;
-
-                default:
                     break;
             }
 
