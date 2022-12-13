@@ -18,6 +18,7 @@ List<IDay> days = new()
     new Day10(),
     new Day11(),
     new Day12(),
+    new Day13(),
 };
 
 for (int i = 0; i < days.Count; i++)
@@ -67,3 +68,6 @@ Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 //Day 12
 //    Results 1 339
 //    Results 2 332
+//Day 13
+//    Results 1 5938
+//    Results 2 29025
