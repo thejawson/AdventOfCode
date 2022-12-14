@@ -8,7 +8,7 @@ internal class Day02 : IDay
 
     public string Puzzle2() => GameList.Sum(m => Score2(m)).ToString();
 
-    private int Score(ReadOnlySpan<char> thrown)
+    private static int Score(ReadOnlySpan<char> thrown)
     {
         return (thrown[0], thrown[2])
             switch
@@ -26,7 +26,7 @@ internal class Day02 : IDay
         };
     }
 
-    private int Score2(ReadOnlySpan<char> thrown)
+    private static int Score2(ReadOnlySpan<char> thrown)
     {
         return (thrown[0], thrown[2])
             switch

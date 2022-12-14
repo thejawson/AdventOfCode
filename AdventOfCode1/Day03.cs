@@ -15,7 +15,7 @@ internal class Day03 : IDay
         return priority.ToString();
     }
 
-    private int Priority(string bag)
+    private static int Priority(string bag)
     {
         var compartment1 = bag.Take(bag.Length / 2);
         var compartment2 = bag.TakeLast(bag.Length / 2);
@@ -25,7 +25,7 @@ internal class Day03 : IDay
         return 0;
     }
 
-    private int Priority2(string[] bags)
+    private static int Priority2(string[] bags)
     {
         foreach (var item in bags[0])
             if (bags[1].Contains(item) && bags[2].Contains(item))
@@ -33,7 +33,7 @@ internal class Day03 : IDay
         return 0;
     }
 
-    private int PriorityScore(char item)
+    private static int PriorityScore(char item)
     {
         var ascii = (int)item;
         return ascii < 97 ? ascii - 38 : ascii - 96;

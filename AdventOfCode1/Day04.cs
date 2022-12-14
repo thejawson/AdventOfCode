@@ -8,7 +8,7 @@ internal class Day04 : IDay
 
     public string Puzzle2() => ElfRange.Count(m => IsOverlap(m)).ToString();
 
-    private bool IsBetween(int between, int start, int end) => between >= start && between <= end;
+    private static bool IsBetween(int between, int start, int end) => between >= start && between <= end;
 
     private bool IsDuplicate(string[] assignment)
     {
@@ -24,7 +24,7 @@ internal class Day04 : IDay
             || IsBetween(elf2[0], elf1[0], elf1[1]) || IsBetween(elf2[1], elf1[0], elf1[1]);
     }
 
-    private void ParseElfs(string[] assignment, out int[] elf1, out int[] elf2)
+    private static void ParseElfs(string[] assignment, out int[] elf1, out int[] elf2)
     {
         elf1 = assignment[0].Split("-").Select(m => int.TryParse(m, out int results) ? results : 0).ToArray();
         elf2 = assignment[1].Split("-").Select(m => int.TryParse(m, out int results) ? results : 0).ToArray();

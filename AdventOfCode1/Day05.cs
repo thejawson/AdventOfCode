@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 internal class Day05 : IDay
 {
-    private readonly List<int[]> Instructions = Input.Day05Instructions.Split("\r\n")
+    private readonly IEnumerable<int[]> Instructions = Input.Day05Instructions.Split("\r\n")
         .Select(n => n.Split(',')
-        .Select(m => int.TryParse(m, out int i) ? i - 1 : 0).ToArray()).ToList();
+        .Select(m => int.TryParse(m, out int i) ? i - 1 : 0).ToArray());
 
     private readonly List<string[]> Stacks = Input.Day05Stacks.Split("\r\n").Select(m => m.Split(',')).ToList();
 

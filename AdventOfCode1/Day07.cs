@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 internal class Day07 : IDay
 {

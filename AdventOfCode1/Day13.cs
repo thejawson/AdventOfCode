@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-
-namespace AdventOfCode;
+﻿namespace AdventOfCode;
 
 internal class Day13 : IDay
 {
@@ -29,7 +24,7 @@ internal class Day13 : IDay
         data.Add("[[2]]");
         data.Add("[[6]]");
         data.Sort((n, m) => { return IsArrayInOrderSorter(new[] { n, m }); });
-        return ((data.IndexOf("[[2]]")+1) * (data.IndexOf("[[6]]")+1)).ToString();
+        return ((data.IndexOf("[[2]]") + 1) * (data.IndexOf("[[6]]") + 1)).ToString();
     }
 
     private int IsArrayInOrderSorter(string[] signals)
@@ -45,7 +40,7 @@ internal class Day13 : IDay
 
     private bool? IsArrayInOrder(string[] signals)
     {
-        var signal1 = ParseSignal (signals[0]).ToArray();
+        var signal1 = ParseSignal(signals[0]).ToArray();
         var signal2 = ParseSignal(signals[1]).ToArray();
 
         for (int i = 0; i < signal1.Length; i++)
@@ -54,10 +49,10 @@ internal class Day13 : IDay
                 return true;
             if (signal2.Length <= i || signal2[i] == "")
                 return false;
-            if (signal1[i][0] =='[' || signal2[i][0] =='[')
+            if (signal1[i][0] == '[' || signal2[i][0] == '[')
             {
-                signal1[i] = signal1[i][0] == '[' ? signal1[i]: $"[{signal1[i]}]";
-                signal2[i] = signal2[i][0] == '[' ? signal2[i]: $"[{signal2[i]}]"; ;                
+                signal1[i] = signal1[i][0] == '[' ? signal1[i] : $"[{signal1[i]}]";
+                signal2[i] = signal2[i][0] == '[' ? signal2[i] : $"[{signal2[i]}]"; ;
 
                 var isInOrder = IsArrayInOrder(new[] { signal1[i], signal2[i] });
                 if (isInOrder.HasValue)
@@ -91,7 +86,7 @@ internal class Day13 : IDay
             {
                 case ',':
                     if (bracketCount == 0)
-                        if(nextSplit == i)
+                        if (nextSplit == i)
                             nextSplit++;
                         else
                         {
@@ -107,14 +102,14 @@ internal class Day13 : IDay
                     bracketCount--;
                     if (bracketCount == 0)
                     {
-                        yield return parseString.Substring(nextSplit, i - nextSplit+1);
+                        yield return parseString.Substring(nextSplit, i - nextSplit + 1);
                         nextSplit = i + 1;
                     }
                     break;
             }
         }
 
-        if(nextSplit< parseString.Length )
+        if (nextSplit < parseString.Length)
             yield return parseString.Substring(nextSplit, parseString.Length - nextSplit);
     }
 }

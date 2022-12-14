@@ -2,7 +2,7 @@
 
 internal class Day09 : IDay
 {
-    private readonly List<string> Lines = Input.Day09.Split("\r\n").ToList();
+    private readonly List<string[]> Lines = Input.Day09.Split("\r\n").Select(m => m.Split(' ')).ToList();
     private readonly HashSet<string> TailLocations = new();
     private (int X, int Y) HeadPosition = (0, 0);
     private (int X, int Y)[] Segments = new (int X, int Y)[9];
@@ -10,14 +10,14 @@ internal class Day09 : IDay
 
     public string Puzzle1()
     {
-        Lines.ForEach(m => Move(m.Split(" ")));
+        Lines.ForEach(m => Move(m));
         return TailLocations.Count.ToString();
     }
 
     public string Puzzle2()
     {
         TailLocations.Clear();
-        Lines.ForEach(m => Move(m.Split(" "), true));
+        Lines.ForEach(m => Move(m, true));
         return TailLocations.Count.ToString();
     }
 

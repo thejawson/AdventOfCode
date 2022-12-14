@@ -7,8 +7,8 @@ internal class Day11 : IDay
 {
     private static int CommonFactor = 1;
     private readonly List<Item> Items = new List<Item>();
-    private Dictionary<int, int> inspections = new Dictionary<int, int>();
-    private List<Monkey> Monkeys = new();
+    private readonly Dictionary<int, int> Inspections = new Dictionary<int, int>();
+    private readonly List<Monkey> Monkeys = new();
 
     public Day11() => ResetData();
 
@@ -23,13 +23,13 @@ internal class Day11 : IDay
     private void ResetData()
     {
         Items.Clear();
-        inspections.Clear();
+        Inspections.Clear();
         CommonFactor = 1;
         Monkeys.Clear();
         Monkeys.AddRange(Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m, Items)).ToList());
         foreach (var monkey in Monkeys)
         {
-            inspections.Add(monkey.Id, 0);
+            Inspections.Add(monkey.Id, 0);
             CommonFactor *= monkey.DivisibleBy;
         }
     }
@@ -40,11 +40,11 @@ internal class Day11 : IDay
             foreach (var monkey in Monkeys)
                 foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
                 {
-                    inspections[monkey.Id]++;
+                    Inspections[monkey.Id]++;
                     monkey.Inspect(item, divideBy3);
                 }
 
-        var monkeyBusiness = inspections.Select(m => m.Value).OrderDescending().ToArray();
+        var monkeyBusiness = Inspections.Select(m => m.Value).OrderDescending().ToArray();
         return $"{new BigInteger(monkeyBusiness[0]) * new BigInteger(monkeyBusiness[1])}";
     }
 
