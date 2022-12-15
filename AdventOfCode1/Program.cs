@@ -16,7 +16,7 @@ List<IDay> days = new()
     new Day08(),
     new Day09(),
     new Day10(),
-    new Day11(),//really slow
+    new Day11(),
     new Day12(),
     new Day13(),
     new Day14(),
@@ -24,6 +24,7 @@ List<IDay> days = new()
 
 for (int i = 0; i < days.Count; i++)
     Console.WriteLine($"Day {i + 1}\n    Results 1 {days[i].Puzzle1()}\n    Results 2 {days[i].Puzzle2()}");
+
 Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 
 //Day 1

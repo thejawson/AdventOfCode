@@ -172,14 +172,12 @@ internal class Day14 : IDay
                     map[i - Day14.XOffset, FromPoint.y] = '#';
         }
 
-
         public Rock(string point1, string point2)
         {
             var points = point1.Split(',').Select(p=> int.Parse(p)).ToArray();
             FromPoint = (points[0], points[1]);
             points = point2.Split(',').Select(p => int.Parse(p)).ToArray();
             ToPoint = (points[0], points[1]);
-            Console.WriteLine($"{FromPoint} {ToPoint}");
         }
     }
 

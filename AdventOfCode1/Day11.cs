@@ -1,63 +1,35 @@
-﻿using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace AdventOfCode;
 
 internal class Day11 : IDay
 {
-    private static int CommonFactor = 1;
-    private readonly List<Item> Items = new List<Item>();
-    private readonly Dictionary<int, int> Inspections = new Dictionary<int, int>();
-    private readonly List<Monkey> Monkeys = new();
-
-    public Day11() => ResetData();
+    private long CommonFactor = 1;
+    private readonly Dictionary<int, Monkey> Monkeys = new();
 
     public string Puzzle1() => RunInspections(20, true);
 
-    public string Puzzle2()
-    {
-        ResetData();
-        return RunInspections(10000, false);
-    }
+    public string Puzzle2() => RunInspections(10000, false);
 
     private void ResetData()
     {
-        Items.Clear();
-        Inspections.Clear();
         CommonFactor = 1;
         Monkeys.Clear();
-        Monkeys.AddRange(Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m, Items)).ToList());
+        Input.Day11.Split("\r\n\r\n").Select(m => new Monkey(m)).ToList().ForEach(m => Monkeys[m.Id] = m);
+
         foreach (var monkey in Monkeys)
-        {
-            Inspections.Add(monkey.Id, 0);
-            CommonFactor *= monkey.DivisibleBy;
-        }
+            CommonFactor *= monkey.Value.DivisibleBy;
     }
 
     private string RunInspections(int run, bool divideBy3)
     {
+        ResetData();
         for (int i = 0; i < run; i++)
-            foreach (var monkey in Monkeys)
-                foreach (var item in Items.Where(m => m.Monkey == monkey.Id))
-                {
-                    Inspections[monkey.Id]++;
-                    monkey.Inspect(item, divideBy3);
-                }
+            foreach (int m in Monkeys.Keys)
+                Monkeys[m].Inspect(divideBy3, CommonFactor, Monkeys);
 
-        var monkeyBusiness = Inspections.Select(m => m.Value).OrderDescending().ToArray();
+        var monkeyBusiness = Monkeys.Select(m => m.Value.Inspections).OrderDescending().ToArray();
         return $"{new BigInteger(monkeyBusiness[0]) * new BigInteger(monkeyBusiness[1])}";
-    }
-
-    private class Item
-    {
-        public int Monkey;
-        public long Worry;
-
-        public Item(int monkey, long worry)
-        {
-            Worry = worry;
-            Monkey = monkey;
-        }
     }
 
     private class Monkey
@@ -68,8 +40,10 @@ internal class Day11 : IDay
         private readonly int Monkey2;
         private readonly int OperationNumber;
         private readonly char Operator;
+        public long Inspections = 0;
+        public List<long> Items = new List<long>();
 
-        public Monkey(string input, List<Item> items)
+        public Monkey(string input)
         {
             var lines = input.Split("\r\n");
             Id = int.Parse(lines[0][7].ToString());
@@ -81,32 +55,37 @@ internal class Day11 : IDay
             var itemList = lines[1].Split(": ")[1];
             if (itemList.Contains(", "))
                 foreach (var item in itemList.Split(", ").Select(n => int.Parse(n)))
-                    items.Add(new Item(Id, item));
+                    Items.Add(item);
             else
-                items.Add(new Item(Id, int.Parse(itemList)));
+                Items.Add(int.Parse(itemList));
         }
 
-        public void Inspect(Item item, bool lowerWorry)
+        public void Inspect(bool lowerWorry, long factor, Dictionary<int, Monkey> monkeys)
         {
-            //using -1 for when it does the action to the currenty Worry
-            var number = OperationNumber == -1 ? item.Worry : OperationNumber;
-            switch (Operator)
+            var items = Items.ToArray();
+            Inspections += items.Length;
+            Items.Clear();
+            foreach (var item in items)
             {
-                case '*':
-                    item.Worry *= number;
-                    break;
+                long worry = item;
+                //using -1 for when it does the action to the currenty Worry
+                var number = OperationNumber == -1 ? worry : OperationNumber;
+                switch (Operator)
+                {
+                    case '*':
+                        worry *= number;
+                        break;
 
-                case '+':
-                    item.Worry += number;
-                    break;
+                    case '+':
+                        worry += number;
+                        break;
+                }
+                if (lowerWorry)
+                    worry /= 3;
+
+                worry %= factor;
+                monkeys[worry % DivisibleBy == 0 ? Monkey1 : Monkey2].Items.Add(worry);
             }
-
-            if (lowerWorry)
-                item.Worry /= 3;
-
-            item.Worry = item.Worry % CommonFactor;
-
-            item.Monkey = item.Worry % DivisibleBy == 0 ? Monkey1 : item.Monkey = Monkey2;
         }
     }
 }
