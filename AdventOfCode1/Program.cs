@@ -22,6 +22,7 @@ List<IDay> days = new()
     new Day14(),
     //new Day15(),
     new Day16(),
+    new Day17(),
 };
 
 for (int i = 0; i < days.Count; i++)

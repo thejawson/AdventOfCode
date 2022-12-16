@@ -10724,6 +10724,9 @@ Valve NS has flow rate=23; tunnels lead to valves CV, BB, UJ";
     public const string Day19 =
 @"";
 
+    public const string Day20 =
+@"";
+
     public const string Day21 =
 @"";
 
