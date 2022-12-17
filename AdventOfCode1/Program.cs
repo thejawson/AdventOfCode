@@ -21,7 +21,7 @@ List<IDay> days = new()
     new Day13(),
     new Day14(),
     //new Day15(),
-    new Day16(),
+    //new Day16(),
     new Day17(),
 };
 
@@ -66,6 +66,7 @@ Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 //▌▌▌  ▌    ▌  ▌ ▌▌▌  ▌▌▌  ▌    ▌  ▌ ▌  ▌▌
 //▌ ▌  ▌    ▌  ▌ ▌    ▌ ▌  ▌    ▌  ▌ ▌  ▌▌
 //▌  ▌ ▌▌▌▌ ▌  ▌ ▌    ▌  ▌ ▌▌▌▌  ▌▌  ▌▌▌
+
 //Day 11
 //    Results 1 98908
 //    Results 2 25935263541
@@ -78,3 +79,9 @@ Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 //Day 14
 //    Results 1 873
 //    Results 2 24813
+//Day 15
+//    Results 1 5108096
+//    Results 2 10553942650264
+//Day 16
+//    Results 1 1653
+//    Results 2 2223
