@@ -17,20 +17,44 @@ internal class Day17 : IDay
         new Rock(new (int, int)[] { (0,0), (0,1), (1,0), (1,1) }, 2, 1),
     };
 
-    public string Puzzle1()
+    public string Puzzle1() => StackRocks(2022);
+
+    private string StackRocks(long runTimes)
     {
         ReadOnlySpan<char> jetDirection = Input.Day17.AsSpan();
 
-        int rockCount = 0;
+        long rockCount = 0;
         int jetCount = 0;
         var yOffset = 4;
-        while (rockCount < 2022)
+        long[] groupCount = new long[3]{ -1,-1,-1};
+        long lastGroup = 0;
+        long offsetCount = 0;
+        long groupSize = 10000 * jetDirection.Length;
+        while (rockCount < runTimes)
         {
+            if (rockCount % groupSize == 0 && rockCount > 1)
+            {
+                int currentCount = RockPosisiton.Max(m => m.Y);
+                groupCount[0] = groupCount[1];
+                groupCount[1] = groupCount[2];
+                groupCount[2] = currentCount - lastGroup;
+                lastGroup = currentCount;
+                if (groupCount[0] == groupCount[1] && groupCount[0] == groupCount[2])
+                {
+                    var numberOfDuplicates = runTimes - rockCount;
+                    long duplicated = numberOfDuplicates / groupSize;
+                    offsetCount += duplicated * groupCount[0];
+                    rockCount = runTimes - (numberOfDuplicates % Convert.ToInt64(groupSize));
+                    Console.WriteLine($"Duplication size {groupCount} found at {currentCount}");
+                }
+            }
+
             var rock = Rocks[rockCount % 5];
             var collide = false;
             var xOffset = 2;
             while (!collide)
             {
+                jetCount %= jetDirection.Length;
                 switch (jetDirection[jetCount % jetDirection.Length])
                 {
                     case '<':
@@ -43,23 +67,22 @@ internal class Day17 : IDay
                         break;
                 }
                 jetCount++;
-                
+
                 collide = IsCollision(rock, xOffset, yOffset - 1);
                 if (!collide)
                     yOffset--;
                 //PrintMap(yOffset, rock, xOffset);
-
                 if (collide)
                 {
                     foreach (var coord in rock.Shape)
                         RockPosisiton.Add((coord.X + xOffset, coord.Y + yOffset));
-                    RockPosisiton = RockPosisiton.TakeLast(1000).ToList();
+                    RockPosisiton = RockPosisiton.TakeLast(115).ToList();
                     yOffset = RockPosisiton.Max(m => m.Y) + OffsetHeight;
                 }
             }
             rockCount++;
         }
-        return RockPosisiton.Max(m => m.Y).ToString();
+        return (RockPosisiton.Max(m => m.Y) + offsetCount).ToString();
     }
 
     private bool IsCollision(Rock rock, int xOffset, int yOffset)
@@ -101,7 +124,8 @@ internal class Day17 : IDay
 
     public string Puzzle2()
     {
-        return "";
+        return "too slow";
+        //return StackRocks(1000000000000);
     }
 
     record struct Rock((int X, int Y)[] Shape, int Width, int Height);
