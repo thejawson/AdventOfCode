@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode;
+﻿namespace AdventOfCode.Year2022;
 
 //Code created by https://chat.openai.com/chat
 internal class Day01AI : IDay
@@ -10,7 +10,7 @@ internal class Day01AI : IDay
 
         // Read the input
         int elfIndex = 0;
-        foreach (var line in Input.Day01.Split("\r\n"))
+        foreach (var line in AdventOfCode.Input.Day01.Split("\r\n"))
         {
             // Check if the line is empty
             if (line.Trim() == "")

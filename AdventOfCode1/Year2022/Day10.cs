@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Year2022;
 
 internal class Day10 : IDay
 {

@@ -1,8 +1,8 @@
-﻿namespace AdventOfCode;
+﻿namespace AdventOfCode.Year2022;
 
 internal class Day02 : IDay
 {
-    private readonly string[] GameList = Input.Day02.Split("\r\n");
+    private readonly string[] GameList = AdventOfCode.Input.Day02.Split("\r\n");
 
     public string Puzzle1() => GameList.Sum(m => Score(m)).ToString();
 

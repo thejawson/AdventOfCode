@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Year2022;
 
 internal class Day17 : IDay
 {
@@ -21,7 +21,7 @@ internal class Day17 : IDay
 
     private string StackRocks(long runTimes)
     {
-        ReadOnlySpan<char> jetDirection = Input.Day17.AsSpan();
+        ReadOnlySpan<char> jetDirection = AdventOfCode.Input.Day17.AsSpan();
 
         long rockCount = 0;
         int jetCount = 0;

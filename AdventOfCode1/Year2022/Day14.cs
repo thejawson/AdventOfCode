@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Year2022;
 
 internal class Day14 : IDay
 {

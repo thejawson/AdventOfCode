@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode;
+﻿namespace AdventOfCode.Year2022;
 
 internal class Day04 : IDay
 {

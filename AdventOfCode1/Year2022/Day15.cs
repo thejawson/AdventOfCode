@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Year2022;
 
 internal class Day15 : IDay
 {

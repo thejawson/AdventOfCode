@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace AdventOfCode;
+namespace AdventOfCode.Year2022;
 
 internal class Day11 : IDay
 {

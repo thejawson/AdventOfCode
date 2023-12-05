@@ -1,8 +1,8 @@
-﻿namespace AdventOfCode;
+﻿namespace AdventOfCode.Year2022;
 
 internal class Day23 : IDay
 {
-    private IEnumerable<string> Data = Input.Day23.Split("\r\n");
+    private IEnumerable<string> Data = AdventOfCode.Input.Day23.Split("\r\n");
 
     public string Puzzle1()
     {
