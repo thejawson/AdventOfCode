@@ -5,9 +5,12 @@ namespace AdventOfCode.Year2023
     {
         private readonly char[][] map;
         private readonly Dictionary<(int, int), long> NumberList = new();
+        private static bool UseTestDate = false;
         public Day03()
         {
-            map = Input.Day03.Split("\r\n").Select(x => x.ToCharArray()).ToArray();
+            map = UseTestDate
+                ? Input.Day03Test.Split("\n").Select(x => x.ToCharArray()).ToArray()
+                : Input.Day03.Split("\n").Select(x => x.ToCharArray()).ToArray();
         }
 
         public string Puzzle1()
@@ -51,7 +54,7 @@ namespace AdventOfCode.Year2023
                 var j2 = map[i].Length - 1;
                 if (int.TryParse(number, out int num1))
                 {
-                    for (int pos = 1; pos <= number.Length; pos++)
+                    for (int pos = 0; pos < number.Length; pos++)
                     {
                         if (!NumberList.ContainsKey((i, j2 - pos)))
                         {
@@ -124,11 +127,8 @@ namespace AdventOfCode.Year2023
             {
                 gearMultiplier *= NumberList[(i, j)];
                 foundCount++;
-                Console.WriteLine($"{NumberList[(i, j)]} {i} {j} {foundCount} {gearMultiplier}");
                 return true;
             }
-            Console.WriteLine($"{i} {j} {foundCount} {gearMultiplier}");
-
             return false;
         }
     }
