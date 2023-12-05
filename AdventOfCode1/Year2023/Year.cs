@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2023
             List<IDay> days = new()
             {
                 new Day01(),
-                //new Day02(),
+                new Day02(),
                 //new Day03(),
                 //new Day04(),
                 //new Day05(),
