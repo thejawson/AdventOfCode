@@ -2,7 +2,7 @@
 
 internal class Day19 : IDay
 {
-    private string[] Data = AdventOfCode.Input.Day19.Split("\r\n\r\n");
+    private string[] Data = Input.Day19.Split("\r\n\r\n");
     private Dictionary<int, BluePrint> BluePrints = new();
     int[] MaxRobot = new int[] { 1, 1, 1, 100 };
     static int[] Multiplier = new int[] { 1, 2, 3, 4};

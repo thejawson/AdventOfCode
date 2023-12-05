@@ -1,11 +1,11 @@
-﻿
-namespace AdventOfCode.Year2023
+﻿namespace AdventOfCode.Year2023
 {
     internal class Day03 : IDay
     {
+        private static readonly bool UseTestDate = false;
         private readonly char[][] map;
         private readonly Dictionary<(int, int), long> NumberList = new();
-        private static bool UseTestDate = false;
+
         public Day03()
         {
             map = UseTestDate
@@ -27,24 +27,17 @@ namespace AdventOfCode.Year2023
                     {
                         number += map[i][j];
                         isPart = true;
-                        if (!isLabeled)
-                        {
-                            isLabeled = CheckLabel(i, j);
-                        }
+                        isLabeled = isLabeled || CheckLabel(i, j);
                     }
                     else
                     {
-                        int.TryParse(number, out int num);
-                        if (isLabeled && isPart)
+                        if (int.TryParse(number, out int num))
                         {
-                            sum += num;
-                        }
-                        for (int pos = 1; pos <= number.Length; pos++)
-                        {
-                            if(!NumberList.ContainsKey((i,j - pos)))
-                            {
-                                NumberList.Add((i, j - pos), num);
-                            }
+                            if (isLabeled && isPart)
+                                sum += num;
+                            for (int pos = 1; pos <= number.Length; pos++)
+                                if (!NumberList.ContainsKey((i, j - pos)))
+                                    NumberList.Add((i, j - pos), num);
                         }
                         number = string.Empty;
                         isPart = false;
@@ -53,36 +46,14 @@ namespace AdventOfCode.Year2023
                 }
                 var j2 = map[i].Length - 1;
                 if (int.TryParse(number, out int num1))
-                {
                     for (int pos = 0; pos < number.Length; pos++)
-                    {
                         if (!NumberList.ContainsKey((i, j2 - pos)))
-                        {
                             NumberList.Add((i, j2 - pos), num1);
-                        }
-                    }
-                }
                 number = string.Empty;
                 isPart = false;
                 isLabeled = false;
             }
             return sum.ToString();
-
-        }
-
-        private bool CheckLabel(int i, int j)
-        {
-            return IsLabel(i - 1, j - 1) || IsLabel(i - 1, j) || IsLabel(i - 1, j + 1) || IsLabel(i, j - 1) || IsLabel(i, j + 1)
-                || IsLabel(i + 1, j - 1) || IsLabel(i + 1, j) || IsLabel(i + 1, j + 1);
-        }
-
-        private bool IsLabel(int i, int j)
-        {
-            if (i > 0 && i < map.Length && j > 0 && j < map[i].Length)
-            {
-                return !(map[i][j] == '.' || char.IsDigit(map[i][j]));
-            }
-            return false;
         }
 
         public string Puzzle2()
@@ -91,7 +62,6 @@ namespace AdventOfCode.Year2023
             for (int i = 0; i < map.Length; i++)
             {
                 for (int j = 0; j < map[i].Length; j++)
-                {
                     if (map[i][j] == '*')
                     {
                         long gearMultiplier = 1;
@@ -116,10 +86,12 @@ namespace AdventOfCode.Year2023
                             sum += gearMultiplier;
                         }
                     }
-                }
             }
             return sum.ToString();
         }
+
+        private bool CheckLabel(int i, int j) => IsLabel(i - 1, j - 1) || IsLabel(i - 1, j) || IsLabel(i - 1, j + 1) || IsLabel(i, j - 1) || IsLabel(i, j + 1)
+                || IsLabel(i + 1, j - 1) || IsLabel(i + 1, j) || IsLabel(i + 1, j + 1);
 
         private bool CheckPosition(int i, int j, ref long gearMultiplier, ref int foundCount)
         {
@@ -131,6 +103,12 @@ namespace AdventOfCode.Year2023
             }
             return false;
         }
+
+        private bool IsLabel(int i, int j)
+        {
+            if (i > 0 && i < map.Length && j > 0 && j < map[i].Length)
+                return !(map[i][j] == '.' || char.IsDigit(map[i][j]));
+            return false;
+        }
     }
 }
-

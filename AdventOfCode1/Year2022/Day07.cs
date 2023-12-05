@@ -9,7 +9,7 @@ internal class Day07 : IDay
     public Day07()
     {
         Current = Root;
-        foreach (string line in AdventOfCode.Input.Day07.Split("\r\n"))
+        foreach (string line in Input.Day07.Split("\r\n"))
         {
             ReadOnlySpan<string> command = line.Split(' ');
             switch (command[0])

@@ -8,8 +8,8 @@ internal class Day06 : IDay
 
     private static string NonRepeatingWork(int length)
     {
-        for (int i = length; i < AdventOfCode.Input.Day06.Length; i++)
-            if (AdventOfCode.Input.Day06.Take(new Range(i - length, i)).Distinct().Count() == length)
+        for (int i = length; i < Input.Day06.Length; i++)
+            if (Input.Day06.Take(new Range(i - length, i)).Distinct().Count() == length)
                 return (i + 1).ToString();
 
         return "not found";

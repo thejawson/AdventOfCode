@@ -2,7 +2,7 @@
 
 internal class Day03 : IDay
 {
-    private readonly string[] BagList = AdventOfCode.Input.Day03.Split("\r\n");
+    private readonly string[] BagList = Input.Day03.Split("\r\n");
 
     public string Puzzle1() => BagList.Sum(Priority).ToString();
 

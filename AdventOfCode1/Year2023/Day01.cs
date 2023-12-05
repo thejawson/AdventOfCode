@@ -1,26 +1,19 @@
-﻿
-using AdventOfCode.Year2022;
-
-namespace AdventOfCode.Year2023
+﻿namespace AdventOfCode.Year2023
 {
     internal class Day01 : IDay
     {
-        public string Puzzle1() => Input.Day01.Split("\r\n")
+        public string Puzzle1() => Input.Day01.Split("\n")
                 .Select(m => GetDigit(m.ToCharArray().Where(n => char.IsDigit(n)).ToArray()))
                 .Sum().ToString();
 
-        private int GetDigit(char[] numbers) => int.Parse($"{numbers.First()}{numbers.Last()}");
-
-        public string Puzzle2()
-        {
-            return Input.Day01.Split("\r\n")
+        public string Puzzle2() => Input.Day01.Split("\n")
                 .Select(m => ReplaceWords(m))
                 .Select(m => GetDigit(m.ToCharArray().Where(n => char.IsDigit(n)).ToArray()))
                 .Sum().ToString();
 
-        }
+        private static int GetDigit(char[] numbers) => int.Parse($"{numbers.First()}{numbers.Last()}");
 
-        private string ReplaceWords(string calibrationInput)
+        private static string ReplaceWords(string calibrationInput)
         {
             var calibration = calibrationInput.ToLower();
             var wordToNumber = new Dictionary<string, string>
@@ -42,9 +35,8 @@ namespace AdventOfCode.Year2023
                 {
                     if (calibration.Substring(index).StartsWith(word.Key))
                     {
-                        calibration = calibration.Substring(0, index) +  word.Value + calibration.Substring(index + 1);
+                        calibration = string.Concat(calibration.AsSpan(0, index), word.Value, calibration.AsSpan(index + 1));
                         index++;
-
                     }
                 }
                 index++;
@@ -53,4 +45,3 @@ namespace AdventOfCode.Year2023
         }
     }
 }
-

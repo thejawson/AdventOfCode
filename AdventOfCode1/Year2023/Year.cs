@@ -2,7 +2,7 @@
 
 namespace AdventOfCode.Year2023
 {
-    static class Year
+    internal static class Year
     {
         public static void Run()
         {
@@ -29,7 +29,6 @@ namespace AdventOfCode.Year2023
                 //new Day17(),
                 //new Day18(),
                 //new Day19(),
-
             };
 
             for (int i = 0; i < days.Count; i++)
@@ -38,18 +37,18 @@ namespace AdventOfCode.Year2023
             Console.WriteLine($"Run time: {Stopwatch.GetElapsedTime(startTime)}");
 
             //Day 1
-            //    Results 1 
-            //    Results 2 
+            //    Results 1 54644
+            //    Results 2 53348
             //Day 2
-            //    Results 1 
-            //    Results 2 
+            //    Results 1 2716
+            //    Results 2 72227
             //Day 3
-            //    Results 1 
-            //    Results 2 
+            //    Results 1 506727
+            //    Results 2 75220503
             //Day 4
-            //    Results 1
-            //    Results 2 
+            //    Results 1 20855
+            //    Results 2 5489600
+            //Run time: 00:00:00.0916863
         }
     }
 }
-

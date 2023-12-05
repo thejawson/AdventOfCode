@@ -4,7 +4,7 @@ namespace AdventOfCode.Year2022;
 
 internal class Day16 : IDay
 {
-    private IEnumerable<string> Data = AdventOfCode.Input.Day16.Split("\r\n");
+    private IEnumerable<string> Data = Input.Day16.Split("\r\n");
     private static Dictionary<string, Room> Rooms = new();
 
     private const int dept = 100000;
