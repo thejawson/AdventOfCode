@@ -33,7 +33,7 @@
             {
                 foreach (var word in wordToNumber)
                 {
-                    if (calibration.Substring(index).StartsWith(word.Key))
+                    if (calibration[index..].StartsWith(word.Key))
                     {
                         calibration = string.Concat(calibration.AsSpan(0, index), word.Value, calibration.AsSpan(index + 1));
                         index++;
