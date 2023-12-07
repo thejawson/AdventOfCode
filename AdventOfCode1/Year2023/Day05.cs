@@ -3,19 +3,47 @@
     internal class Day05 : IDay
     {
         private static readonly bool UseTestDate = false;
-        private readonly List<(int[], int[])> cards;
+        private readonly List<List<Transform>> transforms;
+        private List<long> seeds;
+        internal class Transform
+        {
+            public long Start;
+            public long End;
+            public long Offset;
+        }
+
         public Day05()
         {
             var input = UseTestDate
-                ? Input.Day05Test.Split("\n\n").ToList()
-                : Input.Day05.Split("\n\n").ToList();
+                ? Input.Day05Test.Split("\r\n\r\n").ToList()
+                : Input.Day05.Split("\r\n\r\n").ToList();
+            var seeds = input.First().Split(' ').Skip(1).Select(m => long.Parse(m)).ToList();
+            transforms = input.Skip(1).Select(m => ParseTransform(m)).ToList();
+        }
+
+        private List<Transform> ParseTransform(string transform)
+        {
+            var rows = transform.Split("\r\n").Skip(1).Select(m => m.Split(' ').Select(n => long.Parse(n)).ToArray()).ToList();
+            return rows.Select(m => new Transform() { Start = m[1], End = m[0], Offset = m[2]} ).ToList();
         }
 
         public string Puzzle1()
         {
             int sum = 0;
-            foreach (var card in cards)
-                sum += (int)Math.Pow(2, (card.Item1.Count(m => card.Item2.Any(n => m == n)) - 1));
+            long currentStep;
+            foreach (var seed in seeds)
+            {
+                currentStep = seed;
+                foreach (var transform in transforms)
+                {
+                    var step = transform.First(m => m.Start <= currentStep && m.End >= currentStep);
+                    if (step != null)
+                    {
+                        currentStep += step.Offset;
+                    }
+                }
+            }
+                
 
             return sum.ToString();
         }
@@ -23,16 +51,7 @@
         public string Puzzle2()
         {
             long sum = 0;
-            Dictionary<int, int> copies = new();
-            for (int i = 0; i < cards.Count; i++)
-                copies[i] = 1;
-            for (int i = 0; i < cards.Count; i++)
-            {
-                int count = cards[i].Item1.Count(m => cards[i].Item2.Any(n => m == n));
-                sum += copies[i];
-                for (int j = count + i; j > i; j--)
-                    copies[j] += copies[i];
-            }
+          
             return sum.ToString();
         }
 

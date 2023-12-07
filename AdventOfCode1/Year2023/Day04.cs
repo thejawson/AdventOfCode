@@ -4,6 +4,7 @@
     {
         private static readonly bool UseTestDate = false;
         private readonly List<(int[], int[])> cards;
+
         public Day04()
         {
             cards = UseTestDate
